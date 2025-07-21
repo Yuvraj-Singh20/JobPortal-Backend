@@ -27,7 +27,7 @@ This is a **Node.js + Express** backend project built for a Job Portal system. I
 │ ├── jobRoutes.js # Job posting routes
 │ └── applicationRoutes.js# Job application routes
 ├── middleware
-│ └── (auth middleware) # To be added if needed
+│ └── authMiddleware.js # Protects routes using JWT and roles
 ├── app.js # Main app file with middleware and route setup
 ├── server.js # Entry point (starts the server)
 ├── .env # Environment variables
