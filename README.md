@@ -16,6 +16,7 @@ bash
 Copy
 Edit
 npm install
+
 3. Create a .env file in the root directory
 env
 Copy
@@ -23,6 +24,7 @@ Edit
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_super_secret_key
+
 4. Run the server
 bash
 Copy
@@ -90,6 +92,4 @@ Yuvraj Singh – GitHub
 🪪 License
 This project is for learning and demonstration purposes.
 
-yaml
-Copy
-Edit
+
