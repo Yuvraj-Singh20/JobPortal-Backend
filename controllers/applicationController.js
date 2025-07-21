@@ -1,16 +1,15 @@
 const Application = require('../models/application');
 const Job = require('../models/job');
 
-// Apply for a job
 exports.applyForJob = async (req, res) => {
   try {
     const { jobId } = req.body;
 
-    // Check if job exists
+    if (!jobId) return res.status(400).json({ message: 'Job ID is required' });
+
     const job = await Job.findById(jobId);
     if (!job) return res.status(404).json({ message: 'Job not found' });
 
-    // Check if already applied
     const existingApp = await Application.findOne({ user: req.user._id, job: jobId });
     if (existingApp) return res.status(400).json({ message: 'Already applied for this job' });
 
@@ -19,21 +18,21 @@ exports.applyForJob = async (req, res) => {
 
     res.status(201).json({ message: 'Applied successfully', application });
   } catch (err) {
-    res.status(500).json({ message: 'Failed to apply' });
+    console.error(" Error in applyForJob:", err);
+    res.status(500).json({ message: 'Failed to apply', error: err.message });
   }
 };
 
-// Get all applications of logged-in user
 exports.getUserApplications = async (req, res) => {
   try {
     const applications = await Application.find({ user: req.user._id }).populate('job');
     res.json(applications);
   } catch (err) {
-    res.status(500).json({ message: 'Failed to fetch applications' });
+    console.error(" Error in getUserApplications:", err);
+    res.status(500).json({ message: 'Failed to fetch applications', error: err.message });
   }
 };
 
-// Delete an application
 exports.deleteApplication = async (req, res) => {
   try {
     const application = await Application.findOneAndDelete({
@@ -45,6 +44,7 @@ exports.deleteApplication = async (req, res) => {
 
     res.json({ message: 'Application deleted' });
   } catch (err) {
-    res.status(500).json({ message: 'Failed to delete application' });
+    console.error(" Error in deleteApplication:", err);
+    res.status(500).json({ message: 'Failed to delete application', error: err.message });
   }
 };
