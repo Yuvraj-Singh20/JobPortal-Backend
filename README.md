@@ -40,8 +40,6 @@ This is a **Node.js + Express** backend project built for a Job Portal system. I
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/job-portal-backend.git
-   cd job-portal-backend
 Install dependencies
 
 bash
@@ -65,24 +63,19 @@ Server runs at: http://localhost:5000
 
 🔐 Auth Routes
 POST /api/auth/register – Register user
-
 POST /api/auth/login – Login and get token
 
 
 📄 Job Routes
 POST /api/jobs/ – Create a job (admin only)
-
 GET /api/jobs/ – Get all jobs
-
 GET /api/jobs/:id – Get job by ID
-
 DELETE /api/jobs/:id – Delete a job (admin only)
 
 
 
 📬 Application Routes
 POST /api/applications/:jobId – Apply for a job (user only)
-
 GET /api/applications/ – Get all applications (admin only)
 
 
