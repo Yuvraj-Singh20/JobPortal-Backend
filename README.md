@@ -1,101 +1,95 @@
-# 🧠 Job Portal Backend
+# 🧰 Job Portal Backend API
 
-This is a **Node.js + Express** backend project built for a Job Portal system. It supports user registration, job posting, and job application functionalities with secure JWT-based authentication and admin role-based access.
-
----
-
-## 🔧 Tech Stack
-
-- **Backend Framework**: Express.js
-- **Database**: MongoDB + Mongoose
-- **Authentication**: JWT
-- **Password Hashing**: bcryptjs
-- **Environment Management**: dotenv
-
----
-
-## 📁 Folder Structure
-
-├── config
-│ └── db.js # MongoDB connection setup
-├── models
-│ ├── User.js # User schema and methods
-│ ├── Job.js # Job schema
-│ └── Application.js # Application schema
-├── routes
-│ ├── authRoutes.js # Register/Login routes
-│ ├── jobRoutes.js # Job posting routes
-│ └── applicationRoutes.js# Job application routes
-├── middleware
-│ └── authMiddleware.js # Protects routes using JWT and roles
-├── app.js # Main app file with middleware and route setup
-├── server.js # Entry point (starts the server)
-├── .env # Environment variables
-├── .gitignore # Ignored files/folders
-└── README.md # This file
+This is the backend for a Job Portal Management System built using **Node.js**, **Express**, and **MongoDB**.  
+It supports user registration, login (JWT-based), role-based job posting (admin), and job applications (users).
 
 ---
 
 ## 🚀 How to Run
 
-1. **Clone the repository**
-   ```bash
-Install dependencies
-
+### 1. Clone the repository
+```bash
+git clone https://github.com/Yuvraj-Singh20/JobPortal-Backend.git
+cd JobPortal-Backend
+2. Install dependencies
 bash
 Copy
 Edit
 npm install
-Create .env file
-
+3. Create a .env file in the root directory
 env
 Copy
 Edit
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_super_secret_key
-Run the server
-
+4. Run the server
+bash
+Copy
+Edit
 nodemon server.js
-Server runs at: http://localhost:5000
+Server will start at: http://localhost:5000
 
-🧪 API Endpoints Overview
-
-🔐 Auth Routes
+🔐 API Endpoints Overview
+🔑 Auth Routes
 POST /api/auth/register – Register user
-POST /api/auth/login – Login and get token
 
+POST /api/auth/login – Login and get JWT token
 
-📄 Job Routes
+💼 Job Routes (admin protected)
 POST /api/jobs/ – Create a job (admin only)
+
 GET /api/jobs/ – Get all jobs
+
 GET /api/jobs/:id – Get job by ID
+
 DELETE /api/jobs/:id – Delete a job (admin only)
 
+📝 Application Routes (user protected)
+POST /api/applications/:jobId – Apply to a job (user only)
 
-
-📬 Application Routes
-POST /api/applications/:jobId – Apply for a job (user only)
 GET /api/applications/ – Get all applications (admin only)
 
+GET /api/applications/my – Get logged-in user's applications
 
-🛡 Admin Role
-When registering, users get role: "user" by default. Admin users can:
-Post and delete jobs
-View all job applications
+🧾 Folder Structure
+bash
+Copy
+Edit
+├── config
+│   └── db.js                  # MongoDB connection setup
+├── models
+│   ├── User.js                # User schema and methods
+│   ├── Job.js                 # Job schema
+│   └── Application.js         # Job application schema
+├── routes
+│   ├── authRoutes.js          # Login & registration
+│   ├── jobRoutes.js           # Job CRUD routes
+│   └── applicationRoutes.js   # Application-related routes
+├── middleware
+│   └── authMiddleware.js      # JWT & role-based route protection
+├── app.js                     # Express app configuration
+├── server.js                  # Entry point to start the server
+├── .env                       # Environment variables
+├── .gitignore                 # Git ignored files
+└── README.md                  # Project documentation
+📌 Tech Stack
+Node.js
 
-✅ Future Improvements
-Add middleware for role-based access
+Express
 
-Input validations using Joi or express-validator
+MongoDB + Mongoose
 
-Better error handling
+JWT for authentication
 
-Resume upload and email notifications
+dotenv, nodemon
 
-📄 License
-This project is part of the CodeXIntern Backend Internship.
+🙌 Author
+Yuvraj Singh – GitHub
 
-Developed by [Yuvraj Singh]
+🪪 License
+This project is for learning and demonstration purposes.
 
-
+yaml
+Copy
+Edit
