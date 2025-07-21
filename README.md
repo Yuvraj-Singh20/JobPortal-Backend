@@ -39,6 +39,7 @@ This is a **Node.js + Express** backend project built for a Job Portal system. I
 ## 🚀 How to Run
 
 1. **Clone the repository**
+2. https://github.com/Yuvraj-Singh20/JobPortal-Backend/
    ```bash
 Install dependencies
 
