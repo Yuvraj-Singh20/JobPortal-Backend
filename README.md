@@ -99,16 +99,13 @@ GET	/api/applications/my	User Only	Get applications by the logged-in user
 
 🧪 Postman Testing (Included)
 The PostmanCollections folder contains pre-configured Postman files to test the entire API:
-
 ✅ Admin.postman_collection.json
-
 ✅ User.postman_collection.json
 
 🔍 How to Use
 Import both files into Postman
 
 Test:
-
 Registration/Login
 
 Job posting (Admin)
