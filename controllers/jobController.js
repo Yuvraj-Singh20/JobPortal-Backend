@@ -7,7 +7,9 @@ exports.createJob = async (req, res) => {
     await job.save();
     res.status(201).json(job);
   } catch (err) {
-    res.status(500).json({ message: 'Failed to create job' });
+    console.error("Job creation failed:", err); 
+    res.status(500).json({ message: "Failed to create job", error: err.message });
+
   }
 };
 

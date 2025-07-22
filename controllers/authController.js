@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const generateToken = require('../utils/tokenUtils');
 
+
 exports.register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
@@ -18,6 +19,7 @@ exports.register = async (req, res) => {
   }
 };
 
+
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -31,6 +33,8 @@ exports.login = async (req, res) => {
     const token = generateToken(user);
     res.json({ user: { id: user._id, name: user.name, email: user.email, role: user.role }, token });
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    console.error(err); 
+    res.status(500).json({ message: 'Login failed', error: err.message });
+
   }
 };
