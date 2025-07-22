@@ -1,269 +1,167 @@
-# 🧰 Job Portal Backend API
+# 💼 Job Portal Backend API
 
-This is the backend for a **Job Portal Management System** built using **Node.js**, **Express**, and **MongoDB**.  
-It supports:
-
-- User registration and login (with JWT-based auth)
-- Admin role to manage job postings
-- Users applying to jobs
-- Role-based route protection
+A scalable backend for a **Job Portal Management System**, built using **Node.js**, **Express**, and **MongoDB**.  
+This project supports **role-based authentication**, **secure job postings**, and **job applications**, designed to simulate real-world backend architecture.
 
 ---
 
-## 🚀 How to Run Locally
+## 🚀 Features
 
-### 1. Clone the repository
+- 🔐 Role-based JWT Authentication (**Admin & User**)
+- 👨‍💻 Users can browse and apply for jobs
+- 🧑‍💼 Admins can post, view, and delete jobs
+- 📦 RESTful API design following best practices
+- ✅ Tested via Postman (collections included)
+
+---
+
+## 🛠️ Tech Stack (Structured by Responsibility)
+
+| Layer / Category    | Technology                        |
+|---------------------|------------------------------------|
+| **Backend**         | Node.js, Express.js               |
+| **Database**        | MongoDB, Mongoose ODM             |
+| **Authentication**  | JSON Web Token (JWT)              |
+| **Environment Vars**| dotenv                            |
+| **Dev Tools**       | Nodemon, Postman                  |
+| **Version Control** | Git, GitHub                       |
+
+---
+
+## 📁 Folder Structure
+
+JobPortal-Backend/
+├── config/ # MongoDB connection config
+├── controllers/ # Route logic
+├── middleware/ # Auth & role validation
+├── models/ # Mongoose schemas
+├── routes/ # Auth, job, and application routes
+├── PostmanCollections/ # Postman testing files (Admin/User)
+├── server.js # Entry point
+├── .env # Environment config
+├── .gitignore
+└── README.md
+
+---
+
+## ⚙️ Setup & Installation
+
+### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/Yuvraj-Singh20/JobPortal-Backend.git
 cd JobPortal-Backend
 
 
-2. Install dependencies
-bash
-Copy
-Edit
+2. Install Dependencies
 npm install
 
 
-3. Create a .env file in the root directory
-env
-Copy
-Edit
+3. Configure Environment Variables
+Create a .env file in the root folder:
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_super_secret_key
+JWT_SECRET=your_jwt_secret_key
 
 
-4. Run the server
-bash
-Copy
-Edit
+4. Run the Development Server
 nodemon server.js
-Server starts at: http://localhost:5000
+Server will start on: http://localhost:5000
 
 
-🔐 API Endpoints Overview
+🔐 Authentication Overview
+Users and Admins must register and then login to receive a JWT token
+
+All protected routes require token in headers:
+
+Authorization: Bearer <your_token>
+📬 API Endpoints
 🔑 Auth Routes
-Method	Endpoint	Description
-POST	/api/auth/register	Register a new user/admin
-POST	/api/auth/login	Login and receive JWT
+Method	Route	Access	Description
+POST	/api/auth/register	Public	Register as User or Admin
+POST	/api/auth/login	Public	Login and receive token
 
 
 💼 Job Routes (Admin Only)
-Method	Endpoint	Description
-POST	/api/jobs/	Create a job
-GET	/api/jobs/	Get all jobs
-GET	/api/jobs/:id	Get job by ID
-DELETE	/api/jobs/:id	Delete a job
+Method	Route	Description
+POST	/api/jobs/	Create new job
+GET	/api/jobs/	Retrieve all jobs
+GET	/api/jobs/:id	Get single job by ID
+DELETE	/api/jobs/:id	Delete job by ID
 
 
-📝 Application Routes (User Only / Admin)
-Method	Endpoint	Description
-POST	/api/applications/:jobId	Apply to a job (user only)
-GET	/api/applications/	Get all applications (admin only)
-GET	/api/applications/my	Get logged-in user's applications
+📝 Application Routes
+Method	Route	Access	Description
+POST	/api/applications/:jobId	User Only	Apply to a specific job by ID
+GET	/api/applications/	Admin Only	Get all applications
+GET	/api/applications/my	User Only	Get applications by the logged-in user
 
 
-📂 Folder Structure
-bash
-Copy
-Edit
-├── config
-│   └── db.js                  # MongoDB connection
-├── models
-│   ├── User.js                # User schema
-│   ├── Job.js                 # Job schema
-│   └── Application.js         # Application schema
-├── routes
-│   ├── authRoutes.js          # Auth endpoints
-│   ├── jobRoutes.js           # Job endpoints
-│   └── applicationRoutes.js   # Application endpoints
-├── middleware
-│   └── authMiddleware.js      # JWT + Role protection
-├── app.js                     # Express app setup
-├── server.js                  # Server entry point
-├── .env                       # Environment variables
-├── .gitignore                 # Ignored files
-└── README.md                  # Project documentation
-🧪 Postman Testing Guide
+🧪 Postman Testing (Included)
+The PostmanCollections folder contains pre-configured Postman files to test the entire API:
 
+✅ Admin.postman_collection.json
 
-📁 Postman Collection
-Uploaded both Admin and User Postman collections to GitHub inside a folder named PostmanCollections.
+✅ User.postman_collection.json
 
-🔧 Admin Testing Flow (Step-by-Step)
-Register Admin
+🔍 How to Use
+Import both files into Postman
 
-URL: http://localhost:5000/api/auth/register
+Test:
 
-Method: POST
+Registration/Login
 
-Body (JSON):
+Job posting (Admin)
+Applying for jobs (User)
+Viewing applications
 
-json
-Copy
-Edit
+👨‍💼 Admin Testing Sample
+
+Register as Admin
 {
-  "name": "Admin One",
+  "name": "Admin",
   "email": "admin@example.com",
   "password": "admin123",
   "role": "admin"
 }
 
 
-Login as Admin
-
-URL: http://localhost:5000/api/auth/login
-
-Method: POST
-
-Body:
-
-json
-Copy
-Edit
+Login
 {
   "email": "admin@example.com",
   "password": "admin123"
 }
-Get the JWT token from response
+Use the received token in all further admin requests.
 
 
-Create a Job
-
-URL: http://localhost:5000/api/jobs/
-
-Method: POST
-
-Headers:
-Authorization: Bearer <admin-token>
-
-Body:
-
-json
-Copy
-Edit
+👤 User Testing Sample
+Register as User
 {
-  "title": "Frontend Developer",
-  "description": "React developer needed",
-  "company": "CodeX",
-  "location": "Remote"
-}
-
-
-Get All Jobs
-
-URL: http://localhost:5000/api/jobs/
-
-Method: GET
-
-Headers:
-Authorization: Bearer <admin-token>
-
-
-Delete a Job
-
-URL: http://localhost:5000/api/jobs/<jobId>
-
-Method: DELETE
-
-Headers:
-Authorization: Bearer <admin-token>
-
-
-Get All Applications
-
-URL: http://localhost:5000/api/applications/
-
-Method: GET
-
-Headers:
-Authorization: Bearer <admin-token>
-
-
-👤 User Testing Flow (Step-by-Step)
-Register User
-
-URL: http://localhost:5000/api/auth/register
-
-Method: POST
-
-Body (JSON):
-
-json
-Copy
-Edit
-{
-  "name": "Yuvraj Singh",
+  "name": "Yuvraj",
   "email": "user@example.com",
   "password": "user123",
   "role": "user"
 }
 
-
-Login as User
-
-URL: http://localhost:5000/api/auth/login
-
-Method: POST
-
-Body:
-
-json
-Copy
-Edit
+Login
 {
   "email": "user@example.com",
   "password": "user123"
 }
-Get the JWT token from response
+
+Use the JWT token to:
+
+View all jobs
+Apply for a job using job ID
+View your own applications
 
 
-View All Jobs
-
-URL: http://localhost:5000/api/jobs/
-
-Method: GET
-
-Headers:
-Authorization: Bearer <user-token>
-
-
-Apply to a Job
-
-URL: http://localhost:5000/api/applications/<jobId>
-
-Method: POST
-
-Headers:
-Authorization: Bearer <user-token>
-
-
-View My Applications
-
-URL: http://localhost:5000/api/applications/my
-
-Method: GET
-
-Headers:
-Authorization: Bearer <user-token>
-
-🧰 Tech Stack
-Node.js
-
-Express.js
-
-MongoDB with Mongoose
-
-JWT for authentication
-
-Dev tools: dotenv, nodemon
-
-🙌 Author
+✍️ Author
 Yuvraj Singh
-🔗 GitHub Profile
-
-🪪 License
-This project is intended for educational and demonstration purposes only.
+💻 GitHub
+🔗 LinkedIn
 
 
+📜 License
+This project is open for learning and demonstration purposes.
+Feel free to fork, use, or modify with proper credit.
